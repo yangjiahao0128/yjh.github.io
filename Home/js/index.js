@@ -101,7 +101,7 @@ var myChart = echarts.init(document.getElementById('main'),'vintage');
                 series: [{
                     name: '人次',
                     type: 'line',
-                    data: [5, 20, 28, 10, 10, 20]
+                    data: [5, 20, 36, 10, 0, 0]
                 }],
                 textStyle: {
                     color: '#fff',
