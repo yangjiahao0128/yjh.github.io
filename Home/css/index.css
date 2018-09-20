@@ -369,7 +369,9 @@ fieldset {
 }
 div.xiao{
 	opacity: 0;
-	display: none;	
+/* 	display: none;	 */
+	transform: scale(0);
+	transition: all 0.5s;
 }
 .BigBox{
 	width: 100vw;
@@ -379,8 +381,9 @@ div.xiao{
     left: 0;
     z-index: 99999;
     background-color: black;
-    transition: opacity 0.5s;
     opacity: 0.9;
+    transition: all 0.5s;
+    transform: scale(1);
 }
 .BigBox>div{
 	width: 600px;
