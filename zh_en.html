@@ -1,32 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta author="YangJiahao">
+  <meta name="keywords" content="杨嘉浩,在线翻译,英汉翻译,杨嘉浩翻译,网页翻译">
+  <meta name="description" content="杨嘉浩翻译">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
   <style>
-    .center{
-      width:300px;
-      margin:0 auto;
+    *{margin: 0;padding: 0;}
+    body,html{width: 100%;height: 100%;}
+    #div1,#div2 {
+        margin: 10px;
+    }
+    button{
+      background: #00abd7;
+      color: #fff;
+      border: 0;
+      border-radius: 10px;
+    }
+    @media screen and (max-width: 600px) {
+      button,input{width: 100%;}
+      .fontSize{
+        font-size: 26px;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="center">
-    <input type="text" id="input" placeholder="zh-en">
-    <button>翻译</button>
-    <div id="div1" style="margin: 20px;"></div>
+    <input type="text" id="input1" placeholder="zh-en" class="fontSize"></br>
+    <button id="btn1" class="fontSize">翻译</button>
+    <div id="div1" class="fontSize"></div>
+  </div>
+  <div class="center">
+    <input type="text" id="input2" placeholder="en-zh" class="fontSize"></br>
+    <button id="btn2" class="fontSize">Click</button>
+    <div id="div2" class="fontSize"></div>
   </div>
 </body>
+
 </html>
 <script>
-  $("button").click(function () {
+  $("#btn1").click(function () {
+    if(input1.value===""){
+      alert("写点东西好吗！！！！");
+      return;
+    }
     $.ajax({
-      url: "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190605T020120Z.17a9303c517d37dc.af991905c293990082db0557e1173a398fd6bd66&lang=zh-en&text=" + input.value, 
+      url: "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190605T020120Z.17a9303c517d37dc.af991905c293990082db0557e1173a398fd6bd66&lang=zh-en&text=" + input1.value,
       success: function (res) {
         $("#div1").html(res.text[0])
+      }
+    });
+  });
+  $("#btn2").click(function () {
+    if(input2.value===""){
+      alert("Write something, okay!!!");
+      return;
+    }
+    $.ajax({
+      url: "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190605T020120Z.17a9303c517d37dc.af991905c293990082db0557e1173a398fd6bd66&lang=en-zh&text=" + input2.value,
+      success: function (res) {
+        $("#div2").html(res.text[0])
       }
     });
   });
