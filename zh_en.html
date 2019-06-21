@@ -47,19 +47,25 @@
 </html>
 <script>
   var lock1 = true;
+  var obj1 = [
+    "别点了，急什么急！！！",
+    "写点东西好吗！！！！",
+    "正在翻译，请稍等...",
+    "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190605T020120Z.17a9303c517d37dc.af991905c293990082db0557e1173a398fd6bd66&lang=zh-en&text="
+  ]
   $("#btn1").click(function () {
     if(lock1===false){
-      alert("别点了，急什么急！！！");
+      alert(obj1[0]);
       return;
     }
     if(input1.value===""){
-      alert("写点东西好吗！！！！");
+      alert(obj1[1]);
       return;
     }
     lock1 = false;
-    $("#div1").html("正在翻译，请稍等...")
+    $("#div1").html(obj1[2])
     $.ajax({
-      url: "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190605T020120Z.17a9303c517d37dc.af991905c293990082db0557e1173a398fd6bd66&lang=zh-en&text=" + input1.value,
+      url: obj1[3] + input1.value,
       success: function (res) {
         $("#div1").html(res.text[0])
         lock1=true;
@@ -75,17 +81,17 @@
   ]
   $("#btn2").click(function () {
     if (lock2 === false) {
-      alert("Stop!!!");
+      alert(obj2[0]);
       return;
     }
     if(input2.value===""){
-      alert("Write something, okay!!!");
+      alert(obj2[1]);
       return;
     }
     lock2 = false;
-    $("#div2").html("Being translated, please wait...")
+    $("#div2").html(obj2[2])
     $.ajax({
-      url: "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190605T020120Z.17a9303c517d37dc.af991905c293990082db0557e1173a398fd6bd66&lang=en-zh&text=" + input2.value,
+      url: obj2[3] + input2.value,
       success: function (res) {
         $("#div2").html(res.text[0])
         lock2 = true;
