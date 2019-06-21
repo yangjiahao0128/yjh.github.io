@@ -46,27 +46,49 @@
 
 </html>
 <script>
+  var lock1 = true;
   $("#btn1").click(function () {
+    if(lock1===false){
+      alert("别点了，急什么急！！！");
+      return;
+    }
     if(input1.value===""){
       alert("写点东西好吗！！！！");
       return;
     }
+    lock1 = false;
+    $("#div1").html("正在翻译，请稍等...")
     $.ajax({
       url: "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190605T020120Z.17a9303c517d37dc.af991905c293990082db0557e1173a398fd6bd66&lang=zh-en&text=" + input1.value,
       success: function (res) {
         $("#div1").html(res.text[0])
+        lock1=true;
       }
     });
   });
+  var lock2 = true;
+  var obj2 = [
+    "Stop!!!",
+    "Write something, okay!!!",
+    "Being translated, please wait...",
+    "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190605T020120Z.17a9303c517d37dc.af991905c293990082db0557e1173a398fd6bd66&lang=en-zh&text="
+  ]
   $("#btn2").click(function () {
+    if (lock2 === false) {
+      alert("Stop!!!");
+      return;
+    }
     if(input2.value===""){
       alert("Write something, okay!!!");
       return;
     }
+    lock2 = false;
+    $("#div2").html("Being translated, please wait...")
     $.ajax({
       url: "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190605T020120Z.17a9303c517d37dc.af991905c293990082db0557e1173a398fd6bd66&lang=en-zh&text=" + input2.value,
       success: function (res) {
         $("#div2").html(res.text[0])
+        lock2 = true;
       }
     });
   });
