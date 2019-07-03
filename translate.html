@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta author="YangJiahao">
+  <meta name="keywords" content="杨嘉浩,杨,嘉,浩,yangjiahao,yang,jia,hao">
+  <meta name="description" content="杨嘉浩的测试，嘿嘿">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body,
+    html {
+      width: 100%;
+      height: 100%;
+    }
+
+    #div1,
+    #div2 {
+      margin: 10px;
+    }
+
+    button {
+      background: #00abd7;
+      color: #fff;
+      border: 0;
+      border-radius: 10px;
+    }
+
+    @media screen and (max-width: 600px) {
+
+      button,
+      input {
+        width: 100%;
+      }
+
+      .fontSize {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="center">
+    <input type="text" id="input1" placeholder="zh-en" class="fontSize"></br>
+    <button id="btn1" class="fontSize">翻译</button>
+    <div id="div1" class="fontSize"></div>
+  </div>
+  <div class="center">
+    <input type="text" id="input2" placeholder="en-zh" class="fontSize"></br>
+    <button id="btn2" class="fontSize">Click</button>
+    <div id="div2" class="fontSize"></div>
+  </div>
+  <div>
+    <input type="text" name="" id="inp" placeholder="请输入中文" class="fontSize"></br>
+    <button id="btn" class="fontSize">转语音</button>
+    <div id="doc"></div>
+  </div>
+</body>
+
+</html>
+<script>
+  if (self != top) {
+    alert("整天乱搞什么！")  // 防止iframe
+    top.location = self.location;
+  }
+
+  var lock3 = true;
+  btn.onclick = function () {
+    if(lock3===false){
+      return;
+    }
+    // 动态倒计时
+    var zhText = inp.value;
+    lock3 = false;
+      // 文字长度决定等待时长
+    var time_num = zhText.length<5?5:10;
+    btn.innerText = "(" + time_num + ")秒再次获取";
+    var timer = setInterval(function () {
+      time_num--;
+      btn.innerText = "(" + time_num + ")秒再次获取";
+      if (time_num == 1) {
+        btn.innerText = "转语音";
+        clearInterval(timer);
+        lock3 = true;
+      }
+    }, 1000);
+    // 转语音
+      zhText = encodeURI(zhText);
+      doc.innerHTML = "<audio autoplay=\"autoplay\"><source src=\"http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=2&text=" + zhText + "\" type=\"audio/mpeg\"><embed height=\"0\" width=\"0\" src=\"http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=2&text=" + zhText + "\"></audio>";
+  }
+  console.log(`%c 杨嘉浩测试 `, 'background:#24acf2 ; border-radius:3px;  color: #fff;line-height:20px;')
+
+  var lock1 = true;
+  var obj1 = [
+    "别点了，急什么急！！！",
+    "写点东西好吗！！！！",
+    "正在翻译，请稍等...",
+    "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190605T020120Z.17a9303c517d37dc.af991905c293990082db0557e1173a398fd6bd66&lang=zh-en&text="
+  ]
+  $("#btn1").click(function () {
+    if (lock1 === false) {
+      alert(obj1[0]);
+      return;
+    }
+    if (input1.value === "") {
+      alert(obj1[1]);
+      return;
+    }
+    lock1 = false;
+    $("#div1").html(obj1[2])
+    $.ajax({
+      url: obj1[3] + input1.value,
+      success: function (res) {
+        $("#div1").html(res.text[0])
+        lock1 = true;
+      }
+    });
+  });
+
+  var lock2 = true;
+  var obj2 = [
+    "Stop!!!",
+    "Write something, okay!!!",
+    "Being translated, please wait...",
+    "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190605T020120Z.17a9303c517d37dc.af991905c293990082db0557e1173a398fd6bd66&lang=en-zh&text="
+  ]
+  $("#btn2").click(function () {
+    if (lock2 === false) {
+      alert(obj2[0]);
+      return;
+    }
+    if (input2.value === "") {
+      alert(obj2[1]);
+      return;
+    }
+    lock2 = false;
+    $("#div2").html(obj2[2])
+    $.ajax({
+      url: obj2[3] + input2.value,
+      success: function (res) {
+        $("#div2").html(res.text[0])
+        lock2 = true;
+      }
+    });
+  });
+</script>
