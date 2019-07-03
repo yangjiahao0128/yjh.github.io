@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text" name="" id="inp">
+  <button id="btn">开始</button>
+  <div id="my"></div>
+</body>
+</html>
+<script>
+  btn.onclick = function(){
+    document.getElementById("my").innerHTML = "<audio autoplay=\"autoplay\"><source src=\"http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=" + inp.value + "\" type=\"audio/mpeg\"><embed height=\"0\" width=\"0\" src=\"http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=" + inp.value + "\"></audio>";
+  }
+</script>
