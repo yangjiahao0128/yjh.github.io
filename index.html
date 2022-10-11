@@ -1,92 +1,117 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>小球碰撞</title>
-<style>
-	#canvas{
-		margin: 1px auto auto 200px;
-		box-shadow: 0 0 10px #000;
-	}
-</style>
-</head>
-<body>
-    <h1>点击画布创建</h1>
-<canvas id="canvas">
-	当前的浏览器不支持canvas!
-</canvas>
-<script>
-	//1.获取当前画布
-	const canvas=document.getElementById("canvas");
-	//获取上下文
-	const ctx=canvas.getContext('2d');
-	//设置画布大小
-	canvas.width=1000;
-	canvas.height=600;
-	canvas.style.boder='1px solid #fff';
-    class Ball{
-        constructor(x,y,c){
-            this.x = x;
-            this.y = y;
-            this.c = c;
-            this.r = 40;
-            this.lockx=true;
-            this.locky=true;
-        }
-        render(){
-            ctx.save();
-            ctx.beginPath();
-			ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
-			ctx.fillStyle=this.c;
-			ctx.fill();
-			ctx.restore();
-        }
-    }
-    class MoveBall extends Ball{
-        constructor(x,y,c){
-            super(x,y,c);
-            // this.x = x;
-            // this.y = y;
-        }
-        updata(){
-            if(this.lockx){
-                this.x +=1;
-                if(this.x>=canvas.width-this.r){
-                    this.lockx=false;
-                }
-            }else{
-                this.x -=1;
-                if(this.x<=0+this.r){   this.lockx=true;  }
-            }
-            if(this.locky){
-                this.y +=1;
-                if(this.y>=canvas.height-this.r){
-                    this.locky=false;
-                }
-            }else{
-                this.y -=1;
-                if(this.y<=0+this.r){   this.locky=true;  }
-            }
-        }
-    }
-    let ballArr=[];
-    canvas.addEventListener('click',function(e){
-		ballArr.push(new MoveBall(e.offsetX,e.offsetY,"rgb("+_(0,255)+","+_(0,255)+","+_(0,255)+")"));
-		console.log(ballArr);
-	}); 
-    setInterval(function(){
-        //清屏
-		ctx.clearRect(0,0,canvas.width,canvas.height);
-		//绘制
-		for(let i=0;i<ballArr.length;i++){
-            ballArr[i].render();
-			ballArr[i].updata();
-		}
-    },5)
-    function _(min,max){
-        return  Math.floor(Math.random() * (max - min + 1) + min);
-    }
-</script>
-</body>
-</html>
 
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <meta charset="UTF-8">
+    <title>小蜜蜂🐝</title>
+    <style>
+        h1{
+            margin-top: 200px;
+            text-align: center;
+        }
+        #canvas {
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 0 10px #000;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>click me</h1>
+    <canvas id="canvas">
+        当前的浏览器不支持canvas!
+    </canvas>
+    <script>
+        var maxNum = window.location.search.split("num=")[1] || 150;
+        //1.获取当前画布
+        const canvas = document.getElementById("canvas");
+        //获取上下文
+        const ctx = canvas.getContext('2d');
+        //设置画布大小
+        canvas.width = window.screen.width;
+        canvas.height = window.screen.height;
+        canvas.style.boder = '1px solid #fff';
+        class Ball {
+            constructor(x, y, c) {
+                this.x = x;
+                this.y = y;
+                this.c = c;
+                this.r = 20;
+                this.lockx = true;
+                this.locky = true;
+            }
+            render() {
+                // 1.圆形
+                // ctx.save();
+                // ctx.beginPath();
+                // ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                // ctx.fillStyle = this.c;
+                // ctx.fill();
+                // ctx.restore();
+
+                // 2.文字
+                ctx.save();
+                ctx.beginPath();
+                ctx.font = '35px 雅黑';
+                ctx.fillStyle = this.c;
+                if(ballArr.length>=maxNum){
+                    ctx.fillText("爱你", this.x, this.y);
+                }else{
+                    ctx.fillText("♥", this.x, this.y);
+                }
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+        class MoveBall extends Ball {
+            constructor(x, y, c) {
+                super(x, y, c);
+                // this.x = x;
+                // this.y = y;
+            }
+            updata() {
+                if (this.lockx) {
+                    this.x += 1;
+                    if (this.x >= canvas.width - this.r) {
+                        this.lockx = false;
+                    }
+                } else {
+                    this.x -= 1;
+                    if (this.x <= 0 + this.r) { this.lockx = true; }
+                }
+                if (this.locky) {
+                    this.y += 1;
+                    if (this.y >= canvas.height - this.r) {
+                        this.locky = false;
+                    }
+                } else {
+                    this.y -= 1;
+                    if (this.y <= 0 + this.r) { this.locky = true; }
+                }
+            }
+        }
+        let ballArr = [];
+        canvas.addEventListener('click', function (e) {
+            ballArr.push(new MoveBall(e.clientX, e.clientY, "rgb(" + _(0, 255) + "," + _(0, 255) + "," + _(0, 255) + ")"));
+        });
+        setInterval(function () {
+            //清屏
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            //绘制
+            for (let i = 0; i < ballArr.length; i++) {
+                ballArr[i].render();
+                ballArr[i].updata();
+            }
+        }, 5)
+        function _(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+    </script>
+</body>
+
+</html>
